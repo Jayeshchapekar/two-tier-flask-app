@@ -19,20 +19,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build image
-      run: docker build -t flask-app .
-    
-    - name: Start container
-      run: docker run -d -p 5000:5000 --name app flask-app
+    # Step 2: Build the images locally
+    - name: Build Docker Compose images
+      run: docker compose build
 
-    - name: Wait for startup
-      run: sleep 15
-
-    - name: Show running containers
-      run: docker ps -a
-
-    - name: Show container logs
-      run: docker logs app
+      # Step 3: Run the built containers
+    - name: Start Docker Compose containers
+      run: docker compose up -d
+    - name: docker ps
+      run: docker-compose ps
       
     - name: successfully message
       run: echo "successfully build and ran docker container"
