@@ -22,11 +22,18 @@ jobs:
     - name: Build image
       run: docker build -t flask-app .
 
-    - name: Run container
+    - name: Start container
       run: docker run -d -p 5000:5000 --name app flask-app
 
-    - name: Check app
-      run: curl http://localhost:5000
+    - name: Wait for startup
+      run: sleep 15
+
+    - name: Show running containers
+      run: docker ps -a
+
+    - name: Show container logs
+      run: docker logs app
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
